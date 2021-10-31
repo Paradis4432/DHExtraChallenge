@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>home!</title>
 </head>
+
 <body>
     <a href="/canciones">Canciones</a><br>
     <a href="/generos">Generos</a><br>
@@ -27,7 +29,7 @@
     </form>
 
     <p>Crea una cancion</p>
-    <form action="/canciones/create" method="post">
+    <form action="/canciones" method="post">
         <input type="text" name="idSong" placeholder="id de la cancion"><br>
         <input type="text" name="tituloSong" placeholder="titulo"><br>
         <input type="text" name="duracionSong" placeholder="duracion de la cancion"><br>
@@ -45,15 +47,66 @@
     </form>
 
     <p>Edita una cancion por id</p>
-    <form action="/canciones/edit/:id" method="put">
-        <input type="text" name="edit">
-        <input type="submit" value="Editar">
+    <form id="editForm" method="put">
+        <input type="text" id="idSong" placeholder="id de la cancion"><br>
+        <input type="text" id="tituloSong" placeholder="titulo"><br>
+        <input type="text" id="duracionSong" placeholder="duracion de la cancion"><br>
+        <input type="text" id="generoSong" placeholder="id genero"><br>
+        <input type="text" id="albumSong" placeholder="id album"><br>
+        <input type="text" id="artistaSong" placeholder="id artista"><br>
+        <input type="submit" value="Editar una cancion">
     </form>
 
     <p>Elimina una cancion por id</p>
-    <form action="/canciones/delete/:id" method="delete">
-        <input type="text" name="delete">
+    <form id="deleteForm" method="post">
+        <input type="text" id="valueID" name="delete">
         <input type="submit" value="Borrar">
     </form>
+
+    <script>
+
+        const editForm = document.getElementById('editForm');
+        editForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const id = document.getElementById('idSong').value;
+            const tituloSong = document.getElementById('tituloSong').value;
+            const duracionSong = document.getElementById('duracionSong').value;
+            const generoSong = document.getElementById('generoSong').value;
+            const albumSong = document.getElementById('albumSong').value;
+            const artistaSong = document.getElementById('artistaSong').value;
+
+            const data = JSON.stringify(Object.fromEntries(editForm));
+            const url = '/canciones/' + id;
+
+            fetch(url, {
+                method: 'PUT',
+                body: data,
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => res.json())
+                .then(data => console.log(data))
+                .catch(err => console.log(err));
+
+        });
+
+        const deleteForm = document.getElementById('deleteForm');
+        deleteForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            const id = document.getElementById('valueID').value;
+            const url = '/canciones/' + id;
+
+            console.log(url, id);
+
+            fetch(url, {
+                method: 'DELETE'
+            })
+                .then(res => res.json())
+                .then(res => console.log(res))
+                .catch(err => console.log(err));
+
+        });
+    </script>
 </body>
+
 </html>

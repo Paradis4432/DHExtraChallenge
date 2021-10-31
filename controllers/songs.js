@@ -49,5 +49,47 @@ module.exports = {
             res.send({ result });
 
         });
+    },
+    editSong: function (req, res) {
+        console.log("editing song");
+        idSong = req.body.idSong;
+        tituloSong = req.body.tituloSong;
+        duracionSong = req.body.duracionSong;
+        updatedAt = new Date();
+        generoSong = req.body.generoSong;
+        albumSong = req.body.albumSong;
+        artistaSong = req.body.artistaSong;
+
+        console.log(req.body)
+
+
+        //debug all variables
+        console.log("id " + idSong);
+        console.log("titulo " + tituloSong);
+        console.log("duracion " + duracionSong);
+        console.log("genero " + generoSong);
+        console.log("album " + albumSong);
+        console.log("artista " + artistaSong);
+
+        //update values in database
+        con.query("UPDATE canciones SET titulo = ?, duracion = ?, updated_at = ?, genero_id = ?, album_id = ?, artista_id = ? WHERE id = ?",
+            [tituloSong, duracionSong, updatedAt, generoSong, albumSong, artistaSong, idSong], function (err, result) {
+                if (err) throw err;
+                console.log("song updated");
+                res.send({ result });
+            });
+
+
+    },
+    deleteSongById: function (req, res) {
+        idSong = req.params.id
+        console.log(idSong);
+
+        con.query("DELETE FROM canciones WHERE id = ?", [idSong], function (err, result) {
+            if (err) throw err;
+            console.log("song deleted");
+            res.send({ result });
+
+        });
     }
 }
