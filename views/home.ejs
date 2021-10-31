@@ -75,12 +75,17 @@
             const albumSong = document.getElementById('albumSong').value;
             const artistaSong = document.getElementById('artistaSong').value;
 
-            const data = JSON.stringify(Object.fromEntries(editForm));
             const url = '/canciones/' + id;
 
             fetch(url, {
                 method: 'PUT',
-                body: data,
+                body: JSON.stringify({
+                    tituloSong: tituloSong,
+                    duracionSong: duracionSong,
+                    generoSong: generoSong,
+                    albumSong: albumSong,
+                    artistaSong: artistaSong
+                }),
                 headers: {
                     'Content-Type': 'application/json'
                 }

@@ -52,7 +52,7 @@ module.exports = {
     },
     editSong: function (req, res) {
         console.log("editing song");
-        idSong = req.body.idSong;
+        idSong = req.params.id;
         tituloSong = req.body.tituloSong;
         duracionSong = req.body.duracionSong;
         updatedAt = new Date();

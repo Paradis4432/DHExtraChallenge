@@ -16,9 +16,6 @@ app.use(session({
     resave: true,
     saveUninitialized: true
 }));
-app.use(
-    cors({ methods: ["GET", "POST", "OPTIONS"], origin: "*", credentials: true })
-  );
 
 app.listen(3000, () => { console.log('Server started at port 3000'); });
 
