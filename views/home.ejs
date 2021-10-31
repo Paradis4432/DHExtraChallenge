@@ -7,6 +7,53 @@
     <title>home!</title>
 </head>
 <body>
-    <h1>nice    </h1>
+    <a href="/canciones">Canciones</a><br>
+    <a href="/generos">Generos</a><br>
+
+    <p>Para crear una cancion tanto el artista como el album deben de tener un id vaildo</p>
+
+    <form action="/artistas" method="POST">
+        <input type="text" name="idArtista" placeholder="id del artista">
+        <input type="text" name="nombreArtista" placeholder="nombre">
+        <input type="text" name="apellidoArtista" placeholder="apellido">
+        <input type="submit" value="crear artista">
+    </form>
+
+    <form action="/albumes" method="POST">
+        <input type="text" name="idAlbum" placeholder="id del album">
+        <input type="text" name="nombreAlbum" placeholder="nombre">
+        <input type="text" name="durationAlbum" placeholder="duracion">
+        <input type="submit" value="crear album">
+    </form>
+
+    <p>Crea una cancion</p>
+    <form action="/canciones/create" method="post">
+        <input type="text" name="idSong" placeholder="id de la cancion"><br>
+        <input type="text" name="tituloSong" placeholder="titulo"><br>
+        <input type="text" name="duracionSong" placeholder="duracion de la cancion"><br>
+        <!--created and updated both are the current time and are the same-->
+        <input type="text" name="generoSong" placeholder="id genero"><br>
+        <input type="text" name="albumSong" placeholder="id album"><br>
+        <input type="text" name="artistaSong" placeholder="id artista"><br>
+        <input type="submit" value="Crear cancion">
+    </form>
+
+    <p>Busca una cancion por id</p>
+    <form action="/canciones" method="get">
+        <input type="text" name="search">
+        <input type="submit" value="Buscar">
+    </form>
+
+    <p>Edita una cancion por id</p>
+    <form action="/canciones/edit/:id" method="put">
+        <input type="text" name="edit">
+        <input type="submit" value="Editar">
+    </form>
+
+    <p>Elimina una cancion por id</p>
+    <form action="/canciones/delete/:id" method="delete">
+        <input type="text" name="delete">
+        <input type="submit" value="Borrar">
+    </form>
 </body>
 </html>
