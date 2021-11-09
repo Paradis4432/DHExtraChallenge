@@ -19,7 +19,7 @@ module.exports = {
                 message: "Faltan datos"
             });
         } else {
-            con.query("INSERT INTO albums (id, nombre, duracion) VALUES (?, ?, ?)", [idAlbum, nombreAlbum, durationAlbum], function (err, result) {
+            con.query("INSERT INTO albumes (id, nombre, duracion) VALUES (?, ?, ?)", [idAlbum, nombreAlbum, durationAlbum], function (err, result) {
                 if (err) {
                     res.status(500).send({
                         message: "Error al crear el album"

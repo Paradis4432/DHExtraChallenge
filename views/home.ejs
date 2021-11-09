@@ -9,10 +9,12 @@
 </head>
 
 <body>
-    <a href="/canciones">Canciones</a><br>
+    <a href="/cancionesList">Canciones</a><br>
     <a href="/generos">Generos</a><br>
 
-    <p>Para crear una cancion tanto el artista como el album deben de tener un id vaildo</p>
+    <b>
+        <p>Para crear una cancion, tanto el id del artista, album como genero deben ser validos</p>
+    </b>
 
     <form action="/artistas" method="POST">
         <input type="number" name="idArtista" placeholder="id del artista">
@@ -48,12 +50,12 @@
 
     <p>Busca una cancion por id</p>
     <form action="/canciones" method="get">
-        <input type="text" name="search">
+        <input type="number" name="search">
         <input type="submit" value="Buscar">
     </form>
 
     <p>Edita una cancion por id</p>
-    <form id="editForm" method="put">
+    <form id="editForm">
         <input type="number" id="idSong" placeholder="id de la cancion"><br>
         <input type="text" id="tituloSong" placeholder="titulo"><br>
         <input type="number" id="duracionSong" placeholder="duracion de la cancion"><br>
@@ -64,7 +66,7 @@
     </form>
 
     <p>Elimina una cancion por id</p>
-    <form id="deleteForm" method="post">
+    <form id="deleteForm">
         <input type="number" id="valueID" name="delete">
         <input type="submit" value="Borrar">
     </form>
@@ -81,6 +83,10 @@
             const albumSong = document.getElementById('albumSong').value;
             const artistaSong = document.getElementById('artistaSong').value;
 
+            if (!id) {
+                alert('id de la cancion es requerido');
+                return;
+            }
             const url = '/canciones/' + id;
 
             fetch(url, {
@@ -105,17 +111,19 @@
         deleteForm.addEventListener('submit', function (e) {
             e.preventDefault();
             const id = document.getElementById('valueID').value;
+            if (!id) {
+                alert('No se puede borrar una cancion sin id');
+                return;
+            }
             const url = '/canciones/' + id;
 
             console.log(url, id);
 
             fetch(url, {
                 method: 'DELETE'
-            })
-                .then(res => res.json())
-                .then(res => console.log(res))
+            }).then(res => res.json())
+                .then(data => console.log(data))
                 .catch(err => console.log(err));
-
         });
     </script>
 </body>

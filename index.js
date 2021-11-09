@@ -19,6 +19,8 @@ app.use(session({
 
 app.listen(3000, () => { console.log('Server started at port 3000'); });
 
+app.use(express.static(path.resolve(__dirname, "./public/css")));
+
 const mainController = require('./controllers/main');
 const songsController = require('./controllers/songs');
 const artistsController = require('./controllers/artists');
@@ -28,7 +30,8 @@ const genresController = require('./controllers/gender');
 
 app.get('/', mainController.home);
 app.get('/generos', genresController.findAll)
-app.get('/canciones', songsController.findAll)
+app.get('/cancionesList', songsController.findAll)
+app.get('/canciones', songsController.findOne)
 
 app.post('/genero', genresController.createGenero)
 app.post('/artistas', artistsController.createArtist);

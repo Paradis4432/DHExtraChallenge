@@ -23,6 +23,7 @@ module.exports = {
             res.status(400).send({
                 message: "Faltan datos"
             });
+            return
         }
         else {
             //chefk if idSong exists
@@ -86,14 +87,7 @@ module.exports = {
                     if (result.length > 0) {
                         res.status(200).send({
                             info: "cancion encontrada",
-                            idSong: result[0].idSong,
-                            tituloSong: result[0].tituloSong,
-                            duracionSong: result[0].duracionSong,
-                            createdAt: result[0].createdAt,
-                            updatedAt: result[0].updatedAt,
-                            generoSong: result[0].generoSong,
-                            albumSong: result[0].albumSong,
-                            artistaSong: result[0].artistaSong
+                            result: result
                         });
                     }
                     else {
@@ -142,14 +136,7 @@ module.exports = {
                             else {
                                 res.status(200).send({
                                     info: "cancion actualizada",
-                                    idSong: idSong,
-                                    tituloSong: tituloSong,
-                                    duracionSong: duracionSong,
-                                    createdAt: result[0].createdAt,
-                                    updatedAt: updatedAt,
-                                    generoSong: generoSong,
-                                    albumSong: albumSong,
-                                    artistaSong: artistaSong
+                                    result: result
                                 });
                             }
                         });
@@ -198,7 +185,7 @@ module.exports = {
                         });
                     }
                     else {
-                        res.status(404).send({
+                        res.status(405).send({
                             message: "cancion no encontrada"
                         });
                     }
@@ -215,7 +202,7 @@ module.exports = {
             }
             else {
                 res.status(200).send({
-                    info: "cancion encontrada",
+                    info: "canciones encontradas",
                     songs: result
                 });
             }
