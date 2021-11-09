@@ -48,7 +48,7 @@ module.exports = {
                             }
                             else {
                                 res.status(200).send({
-                                    info: "new song saved",
+                                    info: "nueva cancion agregada",
                                     idSong: idSong,
                                     tituloSong: tituloSong,
                                     duracionSong: duracionSong,
