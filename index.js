@@ -28,7 +28,7 @@ const genresController = require('./controllers/gender');
 
 app.get('/', mainController.home);
 app.get('/generos', genresController.findAll)
-app.get('/canciones', songsController.findOne)
+app.get('/canciones', songsController.findAll)
 
 app.post('/genero', genresController.createGenero)
 app.post('/artistas', artistsController.createArtist);

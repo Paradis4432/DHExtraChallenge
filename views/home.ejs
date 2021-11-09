@@ -15,34 +15,34 @@
     <p>Para crear una cancion tanto el artista como el album deben de tener un id vaildo</p>
 
     <form action="/artistas" method="POST">
-        <input type="text" name="idArtista" placeholder="id del artista">
+        <input type="number" name="idArtista" placeholder="id del artista">
         <input type="text" name="nombreArtista" placeholder="nombre">
         <input type="text" name="apellidoArtista" placeholder="apellido">
         <input type="submit" value="crear artista">
     </form>
 
     <form action="/albumes" method="POST">
-        <input type="text" name="idAlbum" placeholder="id del album">
+        <input type="number" name="idAlbum" placeholder="id del album">
         <input type="text" name="nombreAlbum" placeholder="nombre">
-        <input type="text" name="durationAlbum" placeholder="duracion">
+        <input type="number" name="durationAlbum" placeholder="duracion">
         <input type="submit" value="crear album">
     </form>
 
     <form action="/genero" method="POST">
-        <input type="text" name="idGenero" placeholder="id del genero">
+        <input type="number" name="idGenero" placeholder="id del genero">
         <input type="text" name="nombreGenero" placeholder="nombre">
         <input type="submit" value="crear genero">
     </form>
 
     <p>Crea una cancion</p>
     <form action="/canciones" method="post">
-        <input type="text" name="idSong" placeholder="id de la cancion"><br>
+        <input type="number" name="idSong" placeholder="id de la cancion"><br>
         <input type="text" name="tituloSong" placeholder="titulo"><br>
-        <input type="text" name="duracionSong" placeholder="duracion de la cancion"><br>
+        <input type="number" name="duracionSong" placeholder="duracion de la cancion"><br>
         <!--created and updated both are the current time and are the same-->
-        <input type="text" name="generoSong" placeholder="id genero"><br>
-        <input type="text" name="albumSong" placeholder="id album"><br>
-        <input type="text" name="artistaSong" placeholder="id artista"><br>
+        <input type="number" name="generoSong" placeholder="id genero"><br>
+        <input type="number" name="albumSong" placeholder="id album"><br>
+        <input type="number" name="artistaSong" placeholder="id artista"><br>
         <input type="submit" value="Crear cancion">
     </form>
 
@@ -54,18 +54,18 @@
 
     <p>Edita una cancion por id</p>
     <form id="editForm" method="put">
-        <input type="text" id="idSong" placeholder="id de la cancion"><br>
+        <input type="number" id="idSong" placeholder="id de la cancion"><br>
         <input type="text" id="tituloSong" placeholder="titulo"><br>
-        <input type="text" id="duracionSong" placeholder="duracion de la cancion"><br>
-        <input type="text" id="generoSong" placeholder="id genero"><br>
-        <input type="text" id="albumSong" placeholder="id album"><br>
-        <input type="text" id="artistaSong" placeholder="id artista"><br>
+        <input type="number" id="duracionSong" placeholder="duracion de la cancion"><br>
+        <input type="number" id="generoSong" placeholder="id genero"><br>
+        <input type="number" id="albumSong" placeholder="id album"><br>
+        <input type="number" id="artistaSong" placeholder="id artista"><br>
         <input type="submit" value="Editar una cancion">
     </form>
 
     <p>Elimina una cancion por id</p>
     <form id="deleteForm" method="post">
-        <input type="text" id="valueID" name="delete">
+        <input type="number" id="valueID" name="delete">
         <input type="submit" value="Borrar">
     </form>
 

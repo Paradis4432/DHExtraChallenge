@@ -13,13 +13,27 @@ module.exports = {
         nombreAlbum = req.body.nombreAlbum;
         durationAlbum = req.body.durationAlbum;
 
-        con.connect(function (err) {
-            if (err) throw err;
-            con.query("INSERT INTO albumes (id,nombre,duracion) VALUES (?,?,?)", [idAlbum,nombreAlbum,durationAlbum], function (err, result) {
-                    if (err) throw err;
-                    console.log("new album saved");
-                });
-        });
-        res.send("new album added with id: " + idAlbum + ", name: " + nombreAlbum + ", duration: " + durationAlbum);
+        //check if variables are ""
+        if (idAlbum == "" || nombreAlbum == "" || durationAlbum == "") {
+            res.status(400).send({
+                message: "Faltan datos"
+            });
+        } else {
+            con.query("INSERT INTO albums (id, nombre, duracion) VALUES (?, ?, ?)", [idAlbum, nombreAlbum, durationAlbum], function (err, result) {
+                if (err) {
+                    res.status(500).send({
+                        message: "Error al crear el album"
+                    });
+                } else {
+                    res.status(201).send({
+                        message: "Album creado",
+                        id: idAlbum,
+                        nombre: nombreAlbum,
+                        duracion: durationAlbum
+                    });
+                }
+            });
+        }
+
     }
 }
