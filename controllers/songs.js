@@ -67,37 +67,29 @@ module.exports = {
         }
     },
     findOne: function (req, res) {
-        idSong = req.query['search'];
+        idSong = req.params.id;
         console.log(idSong);
-
-        //check if idSong is ""
-        if (idSong == "") {
-            res.status(400).send({
-                message: "Faltan datos"
-            });
-        } else {
-            //check if idSong exists
-            con.query("SELECT * FROM canciones WHERE id = ?", [idSong], function (err, result) {
-                if (err) {
-                    res.status(500).send({
-                        message: "Error en la consulta"
+        //check if idSong exists
+        con.query("SELECT * FROM canciones WHERE id = ?", [idSong], function (err, result) {
+            if (err) {
+                res.status(500).send({
+                    message: "Error en la consulta"
+                });
+            }
+            else {
+                if (result.length > 0) {
+                    res.status(200).send({
+                        info: "cancion encontrada",
+                        result: result
                     });
                 }
                 else {
-                    if (result.length > 0) {
-                        res.status(200).send({
-                            info: "cancion encontrada",
-                            result: result
-                        });
-                    }
-                    else {
-                        res.status(404).send({
-                            message: "cancion no encontrada"
-                        });
-                    }
+                    res.status(404).send({
+                        message: "cancion no encontrada"
+                    });
                 }
-            });
-        }
+            }
+        });
     },
     editSong: function (req, res) {
         idSong = req.params.id;
@@ -121,7 +113,7 @@ module.exports = {
                     res.status(500).send({
                         message: "Error en la consulta"
                     });
-                    
+
                 }
                 else {
                     if (result.length > 0) {
@@ -149,7 +141,7 @@ module.exports = {
                                 });
                             }
                         });
-                    }   
+                    }
                     else {
                         res.status(404).send({
                             message: "cancion no encontrada"
@@ -162,7 +154,7 @@ module.exports = {
     deleteSongById: function (req, res) {
         idSong = req.params.id;
         if (idSong == "") {
-            res.status(400).send({  
+            res.status(400).send({
                 message: "faltan valores"
             });
         }

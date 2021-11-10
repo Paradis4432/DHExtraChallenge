@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <a href="/cancionesList">Canciones</a><br>
+    <a href="/canciones">Canciones</a><br>
     <a href="/generos">Generos</a><br>
 
     <b>
@@ -49,8 +49,8 @@
     </form>
 
     <p>Busca una cancion por id</p>
-    <form action="/canciones" method="get">
-        <input type="number" name="search">
+    <form id="searchForm">
+        <input type="number" id="search">
         <input type="submit" value="Buscar">
     </form>
 
@@ -66,7 +66,18 @@
         <input type="submit" value="Borrar">
     </form>
     <script>
+        //SEARCH FORM
+        const searchForm = document.getElementById('searchForm');
+        searchForm.onsubmit = function(e) {
+            const id = document.getElementById('search').value;
+            if(!id) {
+                alert('No se puede buscar una cancion sin id');
+                e.preventDefault();
+            }
+            this.setAttribute('action', '/canciones/' + id + '?_method=GET');
+            }
         
+        //EDIT FORM
         const editForm = document.getElementById('editForm');
         editForm.onsubmit = function (e) {
             const id = document.getElementById('idSong').value;

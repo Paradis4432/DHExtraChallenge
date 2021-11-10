@@ -31,17 +31,14 @@ const genresController = require('./controllers/gender');
 
 app.get('/', mainController.home);
 app.get('/generos', genresController.findAll)
-app.get('/cancionesList', songsController.findAll)
-app.get('/canciones', songsController.findOne)
+app.get('/canciones', songsController.findAll)
+app.get('/canciones/:id', songsController.findOne)
 
 app.post('/genero', genresController.createGenero)
 app.post('/artistas', artistsController.createArtist);
 app.post('/albumes', albumController.createAlbum);
 app.post('/canciones', songsController.createSong);
 
-//app.put('/canciones/:id', songsController.editSong);
-
-//app.delete('/canciones/:id', songsController.deleteSongById);
 const songs = require('./router')
 app.use('/canciones', songs)
 
