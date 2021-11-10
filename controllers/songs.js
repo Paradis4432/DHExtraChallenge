@@ -100,25 +100,13 @@ module.exports = {
         }
     },
     editSong: function (req, res) {
-        console.log("editing song");
         idSong = req.params.id;
-        console.log("req params")
-        console.log(req.params);
-        console.log("req body")
-        console.log(req.body);
-
-        console.log(req.params.titulo);
-        console.log(req.body.titulo)
-        console.log(req.url);
-        console.log(req.url.searchParams.get("titulo"));
-
-        duracionSong = req.params.duracionSong;
+        tituloSong = req.body.tituloSong;
+        duracionSong = req.body.duracionSong;
         updatedAt = new Date();
-        generoSong = req.params.generoSong;
-        albumSong = req.params.albumSong;
-        artistaSong = req.params.artistaSong;
-
-        return
+        generoSong = req.body.generoSong;
+        albumSong = req.body.albumSong;
+        artistaSong = req.body.artistaSong;
 
         //check if variables are ""
         if (idSong == "" || tituloSong == "" || duracionSong == "" || generoSong == "" || albumSong == "" || artistaSong == "") {
@@ -139,7 +127,7 @@ module.exports = {
                     if (result.length > 0) {
                         //update song
 
-                        con.query("UPDATE canciones SET titulo = ?, duracion = ?, updated_at = ?, genero_id = ?, album_id = ?, artista_id = ? WHERE id = ?", [tituloSong, duracionSong, updatedAt, generoSong, albumSong, artistaSong, idSong], function (err, result) {
+                        con.query("UPDATE canciones SET titulo = ?, duracion = ?, updated_at = ?, genero_id = ?, album_id = ?, artista_id = ? WHERE id = ?", [tituloSong, duracionSong, updatedAt, generoSong, albumSong, artistaSong, idSong], function (err, result1) {
                             if (err) {
                                 res.status(500).send({
                                     message: "Error en la consulta"
@@ -149,7 +137,15 @@ module.exports = {
                             else {
                                 res.status(200).send({
                                     info: "cancion actualizada",
-                                    result: result
+                                    Valores: {
+                                        ID: idSong,
+                                        Titulo: tituloSong,
+                                        Duracion: duracionSong,
+                                        Actualizado: updatedAt,
+                                        GeneroID: generoSong,
+                                        AlbumID: albumSong,
+                                        ArtistaID: artistaSong
+                                    }
                                 });
                             }
                         });
@@ -163,10 +159,8 @@ module.exports = {
             });
         }
     },
-    deleteSongById: function (req, res, idSong) {
-        //idSong = req.params.id
-        //console.log(idSong);
-        //check if idSong is ""
+    deleteSongById: function (req, res) {
+        idSong = req.params.id;
         if (idSong == "") {
             res.status(400).send({  
                 message: "faltan valores"

@@ -44,3 +44,5 @@ app.post('/canciones', songsController.createSong);
 //app.delete('/canciones/:id', songsController.deleteSongById);
 const songs = require('./router')
 app.use('/canciones', songs)
+
+app.get('/editSong/:id', mainController.editSong)
