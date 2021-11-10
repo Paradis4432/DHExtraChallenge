@@ -100,7 +100,6 @@ module.exports = {
         }
     },
     editSong: function (req, res) {
-        //console.log("editing song");
         idSong = req.params.id;
         tituloSong = req.body.tituloSong;
         duracionSong = req.body.duracionSong;
@@ -122,21 +121,31 @@ module.exports = {
                     res.status(500).send({
                         message: "Error en la consulta"
                     });
+                    
                 }
                 else {
                     if (result.length > 0) {
                         //update song
 
-                        con.query("UPDATE canciones SET titulo = ?, duracion = ?, updated_at = ?, genero_id = ?, album_id = ?, artista_id = ? WHERE id = ?", [tituloSong, duracionSong, updatedAt, generoSong, albumSong, artistaSong, idSong], function (err, result) {
+                        con.query("UPDATE canciones SET titulo = ?, duracion = ?, updated_at = ?, genero_id = ?, album_id = ?, artista_id = ? WHERE id = ?", [tituloSong, duracionSong, updatedAt, generoSong, albumSong, artistaSong, idSong], function (err, result1) {
                             if (err) {
                                 res.status(500).send({
                                     message: "Error en la consulta"
                                 });
+                                console.log(err);
                             }
                             else {
                                 res.status(200).send({
                                     info: "cancion actualizada",
-                                    result: result
+                                    Valores: {
+                                        ID: idSong,
+                                        Titulo: tituloSong,
+                                        Duracion: duracionSong,
+                                        Actualizado: updatedAt,
+                                        GeneroID: generoSong,
+                                        AlbumID: albumSong,
+                                        ArtistaID: artistaSong
+                                    }
                                 });
                             }
                         });
@@ -151,9 +160,7 @@ module.exports = {
         }
     },
     deleteSongById: function (req, res) {
-        idSong = req.params.id
-        //console.log(idSong);
-        //check if idSong is ""
+        idSong = req.params.id;
         if (idSong == "") {
             res.status(400).send({  
                 message: "faltan valores"
@@ -173,7 +180,8 @@ module.exports = {
                         con.query("DELETE FROM canciones WHERE id = ?", [idSong], function (err, result) {
                             if (err) {
                                 res.status(500).send({
-                                    message: "Error en la consulta"
+                                    message: "Error en la consulta",
+                                    err: err
                                 });
                             }
                             else {

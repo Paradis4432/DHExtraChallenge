@@ -57,74 +57,40 @@
     <p>Edita una cancion por id</p>
     <form id="editForm">
         <input type="number" id="idSong" placeholder="id de la cancion"><br>
-        <input type="text" id="tituloSong" placeholder="titulo"><br>
-        <input type="number" id="duracionSong" placeholder="duracion de la cancion"><br>
-        <input type="number" id="generoSong" placeholder="id genero"><br>
-        <input type="number" id="albumSong" placeholder="id album"><br>
-        <input type="number" id="artistaSong" placeholder="id artista"><br>
         <input type="submit" value="Editar una cancion">
     </form>
 
     <p>Elimina una cancion por id</p>
-    <form id="deleteForm">
+    <form method="post" id="deleteForm">
         <input type="number" id="valueID" name="delete">
         <input type="submit" value="Borrar">
     </form>
-
     <script>
-
+        
         const editForm = document.getElementById('editForm');
-        editForm.addEventListener('submit', (e) => {
-            e.preventDefault();
+        editForm.onsubmit = function (e) {
             const id = document.getElementById('idSong').value;
-            const tituloSong = document.getElementById('tituloSong').value;
-            const duracionSong = document.getElementById('duracionSong').value;
-            const generoSong = document.getElementById('generoSong').value;
-            const albumSong = document.getElementById('albumSong').value;
-            const artistaSong = document.getElementById('artistaSong').value;
-
             if (!id) {
-                alert('id de la cancion es requerido');
+                alert('No se puede editar una cancion sin id');
+                e.preventDefault();
                 return;
             }
-            const url = '/canciones/' + id;
-
-            fetch(url, {
-                method: 'PUT',
-                body: JSON.stringify({
-                    tituloSong: tituloSong,
-                    duracionSong: duracionSong,
-                    generoSong: generoSong,
-                    albumSong: albumSong,
-                    artistaSong: artistaSong
-                }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            }).then(res => res.json())
-                .then(data => console.log(data))
-                .catch(err => console.log(err));
-
-        });
-
+            this.setAttribute('action', '/editSong/' + id + '?_method=GET');
+        }
+        
+        //DELETE FORM
         const deleteForm = document.getElementById('deleteForm');
-        deleteForm.addEventListener('submit', function (e) {
-            e.preventDefault();
+        deleteForm.onsubmit = function (e) {
             const id = document.getElementById('valueID').value;
             if (!id) {
                 alert('No se puede borrar una cancion sin id');
+                e.preventDefault();
                 return;
             }
-            const url = '/canciones/' + id;
+            this.setAttribute('action', '/canciones/' + id + '?_method=DELETE');
+            
+        }
 
-            console.log(url, id);
-
-            fetch(url, {
-                method: 'DELETE'
-            }).then(res => res.json())
-                .then(data => console.log(data))
-                .catch(err => console.log(err));
-        });
     </script>
 </body>
 
