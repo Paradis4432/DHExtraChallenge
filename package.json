@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Paradis4432/DHExtraChallenge#readme",
   "dependencies": {
+    "async": "^3.2.2",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-session": "^1.17.2",

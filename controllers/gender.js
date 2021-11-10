@@ -9,20 +9,19 @@ var con = mysql.createConnection({
 
 module.exports = {
     findAll: function (req, res) {
-        con.query('SELECT * FROM generos', function (err, result, fields) {
+        con.query('SELECT * FROM generos', function (err, generos, fields) {
             if (err){
                 res.status(500).send(err);
                 return
             }
-            let generos = result;
+            let pending = generos.length;
             let generos_json = [];
-            for (let i = 0; i < generos.length; i++){
-                con.query('SELECT * FROM canciones WHERE genero_id = ' + generos[i].id, function (err, result, fields) {
+            for (let i = 0; i < pending; i++){
+                con.query('SELECT * FROM canciones WHERE genero_id = ' + generos[i].id, function (err, canciones, fields) {
                     if (err){
                         res.status(500).send(err);
                         return
                     }
-                    let canciones = result;
                     let canciones_json = [];
                     for (let j = 0; j < canciones.length; j++){
                         canciones_json.push({
@@ -39,13 +38,11 @@ module.exports = {
                         name: generos[i].name,
                         canciones: canciones_json
                     });
-                    console.log("generos json inside loop")
-                    console.log(generos_json);
+                    if (--pending === 0){
+                        callback(res,generos_json);
+                    }
                 });
             }
-            console.log("generos_json")
-            console.log(generos_json);
-            res.send({data: generos_json});
         }
         );
     },
@@ -86,3 +83,7 @@ module.exports = {
         }
     }
 }
+
+var callback = function(res,data){
+    res.send({data: data})
+};
