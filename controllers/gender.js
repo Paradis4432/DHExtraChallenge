@@ -9,14 +9,45 @@ var con = mysql.createConnection({
 
 module.exports = {
     findAll: function (req, res) {
-        //update to group by generos, make a json inside a json
-        con.query('SELECT * FROM canciones INNER JOIN generos ON canciones.genero_id = generos.id ORDER BY generos.id', function (err, result, fields) {
+        con.query('SELECT * FROM generos', function (err, result, fields) {
             if (err){
                 res.status(500).send(err);
                 return
             }
-            res.send(result);
-        });
+            let generos = result;
+            let generos_json = [];
+            for (let i = 0; i < generos.length; i++){
+                con.query('SELECT * FROM canciones WHERE genero_id = ' + generos[i].id, function (err, result, fields) {
+                    if (err){
+                        res.status(500).send(err);
+                        return
+                    }
+                    let canciones = result;
+                    let canciones_json = [];
+                    for (let j = 0; j < canciones.length; j++){
+                        canciones_json.push({
+                            id: canciones[j].id,
+                            titulo: canciones[j].titulo,
+                            duracion: canciones[j].duracion,
+                            genero_id: canciones[j].genero_id,
+                            album_id: canciones[j].album_id,
+                            artista_id: canciones[j].artista_id
+                        });
+                    }
+                    generos_json.push({
+                        id: generos[i].id,
+                        name: generos[i].name,
+                        canciones: canciones_json
+                    });
+                    console.log("generos json inside loop")
+                    console.log(generos_json);
+                });
+            }
+            console.log("generos_json")
+            console.log(generos_json);
+            res.send({data: generos_json});
+        }
+        );
     },
     createGenero: function (req, res) {
         idGenero = req.body.idGenero;
