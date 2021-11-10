@@ -100,14 +100,25 @@ module.exports = {
         }
     },
     editSong: function (req, res) {
-        //console.log("editing song");
+        console.log("editing song");
         idSong = req.params.id;
-        tituloSong = req.body.tituloSong;
-        duracionSong = req.body.duracionSong;
+        console.log("req params")
+        console.log(req.params);
+        console.log("req body")
+        console.log(req.body);
+
+        console.log(req.params.titulo);
+        console.log(req.body.titulo)
+        console.log(req.url);
+        console.log(req.url.searchParams.get("titulo"));
+
+        duracionSong = req.params.duracionSong;
         updatedAt = new Date();
-        generoSong = req.body.generoSong;
-        albumSong = req.body.albumSong;
-        artistaSong = req.body.artistaSong;
+        generoSong = req.params.generoSong;
+        albumSong = req.params.albumSong;
+        artistaSong = req.params.artistaSong;
+
+        return
 
         //check if variables are ""
         if (idSong == "" || tituloSong == "" || duracionSong == "" || generoSong == "" || albumSong == "" || artistaSong == "") {
@@ -122,6 +133,7 @@ module.exports = {
                     res.status(500).send({
                         message: "Error en la consulta"
                     });
+                    
                 }
                 else {
                     if (result.length > 0) {
@@ -132,6 +144,7 @@ module.exports = {
                                 res.status(500).send({
                                     message: "Error en la consulta"
                                 });
+                                console.log(err);
                             }
                             else {
                                 res.status(200).send({
@@ -150,8 +163,8 @@ module.exports = {
             });
         }
     },
-    deleteSongById: function (req, res) {
-        idSong = req.params.id
+    deleteSongById: function (req, res, idSong) {
+        //idSong = req.params.id
         //console.log(idSong);
         //check if idSong is ""
         if (idSong == "") {
@@ -173,7 +186,8 @@ module.exports = {
                         con.query("DELETE FROM canciones WHERE id = ?", [idSong], function (err, result) {
                             if (err) {
                                 res.status(500).send({
-                                    message: "Error en la consulta"
+                                    message: "Error en la consulta",
+                                    err: err
                                 });
                             }
                             else {
